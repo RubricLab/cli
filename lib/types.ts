@@ -1,6 +1,6 @@
 import type { z } from 'zod'
 
-export type Command<TArgs extends z.ZodType = z.AnyZodObject> = {
+export type Command<TArgs extends z.ZodSchema = z.ZodSchema> = {
 	name: string
 	description: string
 	args: TArgs

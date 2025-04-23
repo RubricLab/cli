@@ -1,3 +1,4 @@
+- [2025-04-23] [Support arg typing via command helper](https://github.com/RubricLab/cli/commit/01730221c250dc651a1cc466ff3aef85a4361a1e)
 - [2025-04-23] [Trigger build](https://github.com/RubricLab/cli/commit/f48dfb50b8388ca5b9a6762aba521093a8226e5b)
 - [2025-04-14] [src -> lib](https://github.com/RubricLab/cli/commit/5366d58c027c275252ef7e79f20afd61183949c6)
 - [2025-04-14] [publish lib/index](https://github.com/RubricLab/cli/commit/77d2c126ff9cf6ec9bcbff925d79bcda2b187da6)
