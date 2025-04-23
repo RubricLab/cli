@@ -120,12 +120,12 @@ function parseArgs<T extends z.ZodType>({
 		}
 	}
 
-	const { success, error } = schema.safeParse(args)
+	const { data, success, error } = schema.safeParse(args)
 
 	if (!success) {
 		console.error(format.error(error.message))
 		process.exit(0)
 	}
 
-	return success
+	return data
 }
