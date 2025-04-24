@@ -8,7 +8,7 @@
     "lint:fix": "bun x biome lint . --write --unsafe"
   },
   "name": "@rubriclab/cli",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "lib/index.ts",
   "private": false,
   "dependencies": {

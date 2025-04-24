@@ -20,7 +20,7 @@ export async function parseCommand({
 	}
 
 	if (argv[0] === '--help' || argv[0] === '-h') {
-		showHelp({ commands, cliName, command: argv[1] })
+		showHelp({ commands, cliName, command: argv[1] || '' })
 		return
 	}
 
@@ -70,11 +70,11 @@ function parseArgs<T extends z.ZodType>({
 		str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
 
 	for (let i = 0; i < argv.length; i++) {
-		const arg = argv[i]
+		const arg = argv[i] || ''
 
 		const flagMatch = arg.match(flagRegex)
 		if (flagMatch) {
-			const flagName = kebabToCamel(flagMatch[1])
+			const flagName = kebabToCamel(flagMatch[1] || '')
 
 			const nextArg = argv[i + 1]
 			const nextIsValue = nextArg && !nextArg.startsWith('-')
@@ -105,7 +105,7 @@ function parseArgs<T extends z.ZodType>({
 
 		const shortMatch = arg.match(shortFlagRegex)
 		if (shortMatch) {
-			const flags = shortMatch[1].split('')
+			const flags = (shortMatch[1] || '').split('')
 			for (const flag of flags) {
 				if (schema instanceof z.ZodObject) {
 					const shape = schema.shape
