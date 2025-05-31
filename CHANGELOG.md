@@ -1,3 +1,4 @@
+- [2025-05-31] [upgrade to zod/v4](https://github.com/RubricLab/cli/commit/732c6745223fce13a322c1d2c6015e3dfbc1443e)
 - [2025-04-24] [Handle undefined args](https://github.com/RubricLab/cli/commit/f34a9b004438071586bdd126db88a84ab8f1b9b2)
 - [2025-04-23] [Support arg typing via command helper](https://github.com/RubricLab/cli/commit/01730221c250dc651a1cc466ff3aef85a4361a1e)
 - [2025-04-23] [Trigger build](https://github.com/RubricLab/cli/commit/f48dfb50b8388ca5b9a6762aba521093a8226e5b)

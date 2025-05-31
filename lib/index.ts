@@ -1,7 +1,7 @@
 import { parseCommand } from './parse'
 import type { CLI, Command } from './types'
 export { format } from './colors'
-import type { z } from 'zod'
+import type { z } from 'zod/v4'
 export type { Command, CLI }
 
 export function createCLI(config: {

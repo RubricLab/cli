@@ -1,4 +1,4 @@
-import type { z } from 'zod'
+import type { z } from 'zod/v4'
 
 export type Command<TArgs extends z.ZodSchema = z.ZodSchema> = {
 	name: string

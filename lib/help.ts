@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { format } from './colors'
 import type { Command } from './types'
 
@@ -52,7 +52,7 @@ function showCommandHelp({
 	console.log(`  ${command.description}`)
 
 	if (command.args instanceof z.ZodObject) {
-		const shape = command.args.shape as z.AnyZodObject
+		const shape = command.args.shape as z.ZodObject
 		const entries = Object.entries(shape)
 
 		if (entries.length > 0) {
@@ -79,27 +79,38 @@ function showCommandHelp({
 	}
 }
 
-function getSchemaType(schema: z.ZodTypeAny): string {
+type SupportedZodType =
+	| z.ZodBoolean
+	| z.ZodString
+	| z.ZodNumber
+	| z.ZodArray
+	| z.ZodOptional
+	| z.ZodDefault
+
+function getSchemaType(schema: SupportedZodType): string {
 	if (schema instanceof z.ZodBoolean) return 'boolean'
 	if (schema instanceof z.ZodString) return 'string'
 	if (schema instanceof z.ZodNumber) return 'number'
 	if (schema instanceof z.ZodArray) return 'array'
-	if (schema instanceof z.ZodOptional) return getSchemaType(schema.unwrap())
-	if (schema instanceof z.ZodDefault) return getSchemaType(schema.removeDefault())
+	if (schema instanceof z.ZodOptional) return getSchemaType(schema.def.innerType as SupportedZodType)
+	if (schema instanceof z.ZodDefault) return getSchemaType(schema.def.innerType as SupportedZodType)
 	return 'value'
 }
 
-function getSchemaDescription(schema: z.ZodTypeAny): string | undefined {
-	if (schema instanceof z.ZodOptional) return getSchemaDescription(schema.unwrap())
-	if (schema instanceof z.ZodDefault) return getSchemaDescription(schema.removeDefault())
+function getSchemaDescription(schema: SupportedZodType): string | undefined {
+	if (schema instanceof z.ZodOptional)
+		return getSchemaDescription(schema.def.innerType as SupportedZodType)
+	if (schema instanceof z.ZodDefault)
+		return getSchemaDescription(schema.def.innerType as SupportedZodType)
 	return schema.description
 }
 
-function getSchemaDefaultValue(schema: z.ZodTypeAny): unknown {
+function getSchemaDefaultValue(schema: SupportedZodType): unknown {
 	if (schema instanceof z.ZodDefault) {
-		const defaultValue = schema._def.defaultValue()
+		const defaultValue = schema.def.defaultValue
 		return defaultValue
 	}
-	if (schema instanceof z.ZodOptional) return getSchemaDefaultValue(schema.unwrap())
+	if (schema instanceof z.ZodOptional)
+		return getSchemaDefaultValue(schema.def.innerType as SupportedZodType)
 	return undefined
 }
