@@ -28,7 +28,7 @@ export function createCommand<T extends z.ZodSchema>(config: {
 	description: string
 	args: T
 	handler: (args: z.infer<T>) => void | Promise<void>
-}): Command {
+}): Command<T> {
 	return {
 		name: config.name,
 		description: config.description,

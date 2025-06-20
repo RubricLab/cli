@@ -2,6 +2,7 @@ import { z } from 'zod/v4'
 import { format } from './colors'
 import { showHelp } from './help'
 import type { Command } from './types'
+import { kebabToCamel } from './utils'
 
 export async function parseCommand({
 	commands,
@@ -55,7 +56,10 @@ export async function parseCommand({
 	}
 }
 
-function parseArgs<T extends z.ZodType>({
+const FLAG_REGEX = /^--([a-zA-Z0-9-_]+)$/
+const SHORT_FLAG_REGEX = /^-([a-zA-Z0-9-_])$/
+
+export function parseArgs<T extends z.ZodType>({
 	argv,
 	schema
 }: {
@@ -63,23 +67,36 @@ function parseArgs<T extends z.ZodType>({
 	schema: T
 }): z.infer<T> {
 	const args: Record<string, unknown> = {}
-	const flagRegex = /^--([a-zA-Z0-9-_]+)$/
-	const shortFlagRegex = /^-([a-zA-Z0-9-_]+)$/
-
-	const kebabToCamel = (str: string): string =>
-		str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
 
 	for (let i = 0; i < argv.length; i++) {
 		const arg = argv[i] || ''
+		const nextArg = argv[i + 1]
+		const nextIsValue = nextArg && !nextArg.startsWith('-')
 
-		const flagMatch = arg.match(flagRegex)
+		const flagMatch = arg.match(FLAG_REGEX)
+		const shortMatch = arg.match(SHORT_FLAG_REGEX)
+
+		if (shortMatch) {
+			const flags = (shortMatch[1] || '').split('')
+			for (const flag of flags) {
+				if (schema instanceof z.ZodObject) {
+					const shape = schema.shape
+					const keys = Object.keys(shape)
+					const matchingKey = keys.find(k => k.toLowerCase().startsWith(flag.toLowerCase()))
+					if (matchingKey) {
+						args[matchingKey] = nextIsValue ? nextArg : true
+						if (nextIsValue) i++ // Skip the next arg
+					}
+				}
+			}
+		}
+
 		if (flagMatch) {
 			const flagName = kebabToCamel(flagMatch[1] || '')
 
-			const nextArg = argv[i + 1]
-			const nextIsValue = nextArg && !nextArg.startsWith('-')
-
+			// TODO: map between Zod types in a flat, extensible way
 			let isBoolean = false
+			let isNumber = false
 			if (schema instanceof z.ZodObject) {
 				const shape = schema.shape
 				const field = shape[flagName]
@@ -88,34 +105,24 @@ function parseArgs<T extends z.ZodType>({
 						isBoolean = true
 					} else if (field instanceof z.ZodOptional && field.unwrap() instanceof z.ZodBoolean) {
 						isBoolean = true
+					} else if (field instanceof z.ZodNumber) {
+						isNumber = true
+					} else if (field instanceof z.ZodOptional && field.unwrap() instanceof z.ZodNumber) {
+						isNumber = true
 					}
 				}
 			}
 
-			if (isBoolean) {
+			if (isNumber) {
+				args[flagName] = Number(nextArg)
+				i++ // Skip the next arg
+			} else if (isBoolean) {
 				args[flagName] = true
 			} else if (nextIsValue) {
 				args[flagName] = nextArg
 				i++ // Skip the next arg
 			} else {
 				throw new Error(`Missing value for flag --${flagMatch[1]}`)
-			}
-			continue
-		}
-
-		const shortMatch = arg.match(shortFlagRegex)
-		if (shortMatch) {
-			const flags = (shortMatch[1] || '').split('')
-			for (const flag of flags) {
-				if (schema instanceof z.ZodObject) {
-					const shape = schema.shape
-					const keys = Object.keys(shape)
-					const matchingKey = keys.find(k => k.toLowerCase().startsWith(flag.toLowerCase()))
-
-					if (matchingKey) {
-						args[matchingKey] = true
-					}
-				}
 			}
 		}
 	}
@@ -124,7 +131,7 @@ function parseArgs<T extends z.ZodType>({
 
 	if (!success) {
 		console.error(format.error(error.message))
-		process.exit(0)
+		throw error
 	}
 
 	return data
