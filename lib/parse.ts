@@ -76,54 +76,48 @@ export function parseArgs<T extends z.ZodType>({
 		const flagMatch = arg.match(FLAG_REGEX)
 		const shortMatch = arg.match(SHORT_FLAG_REGEX)
 
+		let flagName = ''
+
 		if (shortMatch) {
 			const flags = (shortMatch[1] || '').split('')
 			for (const flag of flags) {
 				if (schema instanceof z.ZodObject) {
-					const shape = schema.shape
+					const { shape } = schema
 					const keys = Object.keys(shape)
 					const matchingKey = keys.find(k => k.toLowerCase().startsWith(flag.toLowerCase()))
-					if (matchingKey) {
-						args[matchingKey] = nextIsValue ? nextArg : true
-						if (nextIsValue) i++ // Skip the next arg
-					}
+					flagName = matchingKey || ''
 				}
 			}
 		}
 
-		if (flagMatch) {
-			const flagName = kebabToCamel(flagMatch[1] || '')
+		if (flagMatch) flagName = kebabToCamel(flagMatch[1] || '')
 
-			// TODO: map between Zod types in a flat, extensible way
-			let isBoolean = false
-			let isNumber = false
-			if (schema instanceof z.ZodObject) {
-				const shape = schema.shape
-				const field = shape[flagName]
-				if (field) {
-					if (field instanceof z.ZodBoolean) {
-						isBoolean = true
-					} else if (field instanceof z.ZodOptional && field.unwrap() instanceof z.ZodBoolean) {
-						isBoolean = true
-					} else if (field instanceof z.ZodNumber) {
-						isNumber = true
-					} else if (field instanceof z.ZodOptional && field.unwrap() instanceof z.ZodNumber) {
-						isNumber = true
-					}
+		// TODO: map between Zod types in a flat, extensible way
+		if (schema instanceof z.ZodObject) {
+			const { shape } = schema
+			let field = shape[flagName]
+			if (field) {
+				if (field instanceof z.ZodOptional) field = field.unwrap()
+				if (field instanceof z.ZodDefault) field = field.unwrap()
+
+				if (field instanceof z.ZodBoolean) {
+					args[flagName] = true
+					continue
+				}
+
+				if (field instanceof z.ZodNumber) {
+					args[flagName] = Number(nextArg)
+					i++ // Skip the next arg
+					continue
 				}
 			}
+		}
 
-			if (isNumber) {
-				args[flagName] = Number(nextArg)
-				i++ // Skip the next arg
-			} else if (isBoolean) {
-				args[flagName] = true
-			} else if (nextIsValue) {
-				args[flagName] = nextArg
-				i++ // Skip the next arg
-			} else {
-				throw new Error(`Missing value for flag --${flagMatch[1]}`)
-			}
+		if (nextIsValue) {
+			args[flagName] = nextArg
+			i++ // Skip the next arg
+		} else {
+			throw new Error(`Missing value for flag --${flagName}`)
 		}
 	}
 

@@ -28,7 +28,7 @@ const cli = createCLI({
   version: '1.0.0',
   description: 'My CLI tool',
   commands: [
-    {
+    createCommand({
       name: 'greet',
       description: 'Greet someone',
       args: z.object({
@@ -39,7 +39,7 @@ const cli = createCLI({
         const greeting = `Hello, ${name}!`;
         console.log(uppercase ? greeting.toUpperCase() : greeting);
       }
-    }
+    })
   ]
 });
 

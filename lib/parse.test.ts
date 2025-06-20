@@ -30,6 +30,15 @@ describe('parseArgs', () => {
 		expect(result).toEqual({ number: 123 })
 	})
 
+	it('should parse short-form number flags', () => {
+		const schema = z.object({
+			number: z.number()
+		})
+		const argv = ['-n', '123']
+		const result = parseArgs({ argv, schema })
+		expect(result).toEqual({ number: 123 })
+	})
+
 	it('should convert kebab-case flags to camelCase', () => {
 		const schema = z.object({
 			kebabCase: z.boolean().optional()
