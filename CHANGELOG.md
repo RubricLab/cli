@@ -1,3 +1,4 @@
+- [2025-06-25] [Use package post-commit hooks](https://github.com/RubricLab/cli/commit/93141e16972175bb4b23d83f75c7c800662b7f85)
 - [2025-05-31] [upgrade to zod/v4](https://github.com/RubricLab/cli/commit/732c6745223fce13a322c1d2c6015e3dfbc1443e)
 - [2025-04-24] [Handle undefined args](https://github.com/RubricLab/cli/commit/f34a9b004438071586bdd126db88a84ab8f1b9b2)
 - [2025-04-23] [Support arg typing via command helper](https://github.com/RubricLab/cli/commit/01730221c250dc651a1cc466ff3aef85a4361a1e)
