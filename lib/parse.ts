@@ -16,12 +16,12 @@ export async function parseCommand({
 	version: string
 }): Promise<void> {
 	if (argv.length === 0) {
-		showHelp({ commands, cliName })
+		showHelp({ cliName, commands })
 		return
 	}
 
 	if (argv[0] === '--help' || argv[0] === '-h') {
-		showHelp({ commands, cliName, command: argv[1] || '' })
+		showHelp({ cliName, command: argv[1] || '', commands })
 		return
 	}
 
@@ -35,7 +35,7 @@ export async function parseCommand({
 
 	if (!command) {
 		console.error(format.error(`Unknown command: ${commandName}`))
-		showHelp({ commands, cliName })
+		showHelp({ cliName, commands })
 		process.exit(1)
 	}
 

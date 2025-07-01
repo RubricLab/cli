@@ -15,10 +15,10 @@ export function showHelp({
 		const cmd = commands.find(c => c.name === command)
 		if (!cmd) {
 			console.error(format.error(`Unknown command: ${command}`))
-			showHelp({ commands, cliName })
+			showHelp({ cliName, commands })
 			return
 		}
-		showCommandHelp({ command: cmd, cliName })
+		showCommandHelp({ cliName, command: cmd })
 		return
 	}
 
@@ -38,13 +38,7 @@ export function showHelp({
 	console.log('    Show version information')
 }
 
-function showCommandHelp({
-	command,
-	cliName
-}: {
-	command: Command
-	cliName: string
-}): void {
+function showCommandHelp({ command, cliName }: { command: Command; cliName: string }): void {
 	console.log(`\n${format.title('USAGE')}`)
 	console.log(`  ${cliName} ${command.name} [options]`)
 

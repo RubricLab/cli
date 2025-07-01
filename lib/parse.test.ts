@@ -92,11 +92,11 @@ describe('parseArgs', () => {
 
 	it.skip('should handle combined short-form flags with a value', () => {
 		const schema = z.object({
-			name: z.string(),
-			bool: z.boolean().optional()
+			bool: z.boolean().optional(),
+			name: z.string()
 		})
 		const argv = ['-nf', 'test']
 		const result = parseArgs({ argv, schema })
-		expect(result).toEqual({ name: 'test', bool: true })
+		expect(result).toEqual({ bool: true, name: 'test' })
 	})
 })

@@ -1,6 +1,8 @@
 import { parseCommand } from './parse'
 import type { CLI, Command } from './types'
+
 export { format } from './colors'
+
 import type { z } from 'zod/v4'
 export type { Command, CLI }
 
@@ -14,9 +16,9 @@ export function createCLI(config: {
 		commands: config.commands,
 		parse: async (argv = process.argv.slice(2)) => {
 			await parseCommand({
-				commands: config.commands,
 				argv,
 				cliName: config.name,
+				commands: config.commands,
 				version: config.version
 			})
 		}
@@ -30,9 +32,9 @@ export function createCommand<T extends z.ZodSchema>(config: {
 	handler: (args: z.infer<T>) => void | Promise<void>
 }): Command<T> {
 	return {
-		name: config.name,
-		description: config.description,
 		args: config.args,
-		handler: config.handler
+		description: config.description,
+		handler: config.handler,
+		name: config.name
 	}
 }
