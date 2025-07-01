@@ -1,3 +1,4 @@
+- [2025-07-01] [consolidate biome format script](https://github.com/RubricLab/cli/commit/ea2999efb0c28c7a217e81245026d3009bc78081)
 - [2025-06-25] [Use package post-commit hooks](https://github.com/RubricLab/cli/commit/93141e16972175bb4b23d83f75c7c800662b7f85)
 - [2025-05-31] [upgrade to zod/v4](https://github.com/RubricLab/cli/commit/732c6745223fce13a322c1d2c6015e3dfbc1443e)
 - [2025-04-24] [Handle undefined args](https://github.com/RubricLab/cli/commit/f34a9b004438071586bdd126db88a84ab8f1b9b2)
