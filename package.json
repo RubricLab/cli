@@ -6,7 +6,7 @@
 	"main": "lib/index.ts",
 	"name": "@rubriclab/cli",
 	"peerDependencies": {
-		"zod": "^3.25.0"
+		"zod": "latest"
 	},
 	"private": false,
 	"publishConfig": {
