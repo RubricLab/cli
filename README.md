@@ -20,7 +20,7 @@ npm install @rubriclab/cli
 ### Basic Example
 
 ```typescript
-import { createCLI } from '@rubriclab/cli';
+import { createCLI, createCommand } from '@rubriclab/cli';
 import { z } from 'zod';
 
 const cli = createCLI({
