@@ -1,8 +1,8 @@
 import { z } from 'zod/v4'
+import { format } from './colors'
 import { showHelp } from './help'
 import type { Command } from './types'
 import { kebabToCamel } from './utils'
-import { format } from './colors'
 
 export async function parseCommand({
 	commands,

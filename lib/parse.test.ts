@@ -75,7 +75,7 @@ describe('parseArgs', () => {
 			try {
 				parseArgs({ argv, schema })
 			} catch (error) {
-				throw error.message
+				throw (error as Error).message
 			}
 		}).toThrow('Missing value for flag --name')
 	})

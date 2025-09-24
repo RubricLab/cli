@@ -4,11 +4,11 @@ import type { CLI, Command } from './types'
 export { format } from './colors'
 
 export * from './ui/heading'
-export * from './ui/text'
-export * from './ui/loader'
-export * from './ui/select'
-export * from './ui/multi-select'
 export * from './ui/input'
+export * from './ui/loader'
+export * from './ui/multi-select'
+export * from './ui/select'
+export * from './ui/text'
 
 import type { z } from 'zod/v4'
 export type { Command, CLI }

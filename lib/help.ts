@@ -1,7 +1,6 @@
 import { z } from 'zod/v4'
 import { format } from './colors'
 import type { Command } from './types'
-import { he } from 'zod/locales'
 import { heading } from './ui/heading'
 
 export function showHelp({
