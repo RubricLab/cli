@@ -1,3 +1,4 @@
+- [2025-09-24] [bring back prepare (step 2)](https://github.com/RubricLab/cli/commit/be5f86346ab1660f73d6e3ca4198c4726d470021)
 - [2025-09-24] [disable prepare (step 1 to fix release)](https://github.com/RubricLab/cli/commit/e371eadae9f4cab095d511e7c1aabeea1a570945)
 - [2025-09-24] [bump](https://github.com/RubricLab/cli/commit/410b99791b42458abc4bd35cad4791096b8c5342)
 - [2025-09-24] [format](https://github.com/RubricLab/cli/commit/0e2f53e69ca2b5668de4d5bd34a5326dc26e17fc)
