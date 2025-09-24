@@ -107,5 +107,3 @@ export function heading(text: string): void {
 	})
 	process.stdout.write('\n')
 }
-
-heading('create rubric app')

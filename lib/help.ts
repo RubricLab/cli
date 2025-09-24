@@ -1,6 +1,8 @@
 import { z } from 'zod/v4'
 import { format } from './colors'
 import type { Command } from './types'
+import { he } from 'zod/locales'
+import { heading } from './ui/heading'
 
 export function showHelp({
 	commands,
@@ -21,6 +23,8 @@ export function showHelp({
 		showCommandHelp({ cliName, command: cmd })
 		return
 	}
+
+	heading(cliName)
 
 	console.log(`\n${format.title('USAGE')}`)
 	console.log(`  ${cliName} [command] [options]`)

@@ -78,15 +78,13 @@ export async function textInput({
 	defaultValue,
 	schema = z.string(),
 	isMasked = false,
-	placeholder
 }: {
 	label: string
 	defaultValue: string
 	schema?: ZodType<string>
 	isMasked?: boolean
-	placeholder?: string
 }): Promise<string> {
-	return ask({ defaultValue, isMasked, label, placeholder, schema })
+	return ask({ defaultValue, isMasked, label, schema, placeholder: defaultValue })
 }
 
 export async function passwordInput({
@@ -94,19 +92,17 @@ export async function passwordInput({
 	defaultValue,
 	schema = z.string(),
 	isMasked = true,
-	placeholder
 }: {
 	label: string
 	defaultValue: string
 	schema?: ZodType<string>
 	isMasked?: boolean
-	placeholder?: string
 }): Promise<string> {
 	return ask({
 		defaultValue,
 		isMasked,
 		label,
-		placeholder: placeholder ?? defaultValue,
+		placeholder: defaultValue,
 		schema
 	})
 }

@@ -1,3 +1,4 @@
+- [2025-09-24] [touches, fixes](https://github.com/RubricLab/cli/commit/8c9981291684c9eaee20842b5cf692b3799178f5)
 - [2025-09-24] [rm old file](https://github.com/RubricLab/cli/commit/1041d19da0188c9d642cb5937b3084f5f93fe767)
 - [2025-09-24] [add ui](https://github.com/RubricLab/cli/commit/a809ae0177be8dfd9aa948b860e51a64fdf639db)
 - [2025-07-01] [run format](https://github.com/RubricLab/cli/commit/7ca23a6d4940452913b3111c1d43b7179638dcf9)
