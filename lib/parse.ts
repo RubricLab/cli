@@ -1,5 +1,4 @@
 import { z } from 'zod/v4'
-import { format } from './colors'
 import { showHelp } from './help'
 import type { Command } from './types'
 import { kebabToCamel } from './utils'
@@ -115,7 +114,7 @@ export function parseArgs<T extends z.ZodType>({
 
 		if (nextIsValue) {
 			args[flagName] = nextArg
-			i++ // Skip the next arg
+			i++
 		} else {
 			throw new Error(`Missing value for flag --${flagName}`)
 		}

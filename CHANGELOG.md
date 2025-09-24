@@ -1,3 +1,4 @@
+- [2025-09-24] [add ui](https://github.com/RubricLab/cli/commit/a809ae0177be8dfd9aa948b860e51a64fdf639db)
 - [2025-07-01] [run format](https://github.com/RubricLab/cli/commit/7ca23a6d4940452913b3111c1d43b7179638dcf9)
 - [2025-07-01] [consolidate biome format script](https://github.com/RubricLab/cli/commit/ea2999efb0c28c7a217e81245026d3009bc78081)
 - [2025-06-25] [Use package post-commit hooks](https://github.com/RubricLab/cli/commit/93141e16972175bb4b23d83f75c7c800662b7f85)
